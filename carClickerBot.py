@@ -4,7 +4,7 @@
 
 from selenium import webdriver
 from datetime import datetime , time , date
-import time , datetime , os , sys , smtplib , linecache , socket , imaplib , email , re , requests
+import time , datetime , os , sys , smtplib , linecache , socket , imaplib , email , re
 from bs4 import BeautifulSoup
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
