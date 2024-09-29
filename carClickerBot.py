@@ -404,7 +404,7 @@ class _email_:
 
 
     def read_email(self):
-        global FROM_EMAIL , FROM_PWD , site_username , site_password
+        global FROM_EMAIL , FROM_PWD , site_username , site_password , last_upgrade_version
         try:
             timer_instance = timer()
             fileSettings_instance = fileSettings()
@@ -583,10 +583,10 @@ class _email_:
                             if(body == fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt") + 1):
                                 fileSettings_instance.write_GitHubUpdatesNumber("GitHubUpdatesNumber.txt" , fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt") + 1 ) # increase 'update' number (GitHub upates) by 1
                                 print("====================================================")
-                                print("The app stopped running for the next 7 minutes.\nA new version version will be automatically\ndownloaded from GitHub. Do not interrupt operation.\nTime: " + str(timer_instance.hour__) + ":" + str(timer_instance.min__) + ":" + str(timer_instance.sec__) )
-                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes. A new release version will be automatically downloaded from GitHub. Do not interrupt operation.<br>Number of update version" + \
+                                print("The app stopped running for the next 7 minutes.\nA new version will be automatically\ndownloaded from GitHub. Do not interrupt operation.\nTime: " + str(timer_instance.hour__) + ":" + str(timer_instance.min__) + ":" + str(timer_instance.sec__) )
+                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes. A new release version<b>" + last_upgrade_version + "</b> will<br>be automatically downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
                                                 ": " + str(fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt")) + "<br><br>" + "Made in Python", ToMe)
-                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes. A new release version will be automatically downloaded from GitHub. Do not interrupt operation.<br>Number of update version" + \
+                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes. A new release version<b>" + last_upgrade_version + "</b>will<br>be automatically downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
                                                 ": " + str(fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt")) + "<br><br>" + "Made in Python", ToOther)
 
                                 print("====================================================")
