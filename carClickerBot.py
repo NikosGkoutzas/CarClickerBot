@@ -579,8 +579,9 @@ class _email_:
                                 body = int( body.strip() )
                             except:
                                 pass
-
+                            
                             if(body == fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt") + 1):
+                                timer_instance.time_correction()
                                 fileSettings_instance.write_GitHubUpdatesNumber("GitHubUpdatesNumber.txt" , fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt") + 1 ) # increase 'update' number (GitHub upates) by 1
                                 print("====================================================")
                                 print("The app stopped running for the next 7 minutes.\nA new version will be automatically\ndownloaded from GitHub. Do not interrupt operation.\nTime: " + str(timer_instance.hour__) + ":" + str(timer_instance.min__) + ":" + str(timer_instance.sec__) )
