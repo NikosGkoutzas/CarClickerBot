@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Sep 28 2024
+# --------------- Last update: Sep 29 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade = "Sep 28 2024"
+last_upgrade_version = "V29.09.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -35,12 +35,12 @@ class driver:
         self.driver = webdriver.Firefox(options=options) # call Firefox
 
     def openUrl(self , url):
-    #    self.driver.get(url)
-        # the driver opens a URL
         try:
                 self.driver.get(url)
         except Exception as e:
                 print(f"Error opening URL: {e}")
+        # open URL
+
     def quit(self):
         self.driver.quit()
         # quit from firefox
@@ -774,7 +774,7 @@ class _email_:
                                         f.write(part.get_payload(decode=True))
 
                                     self.send_email("⚙️🛠️ New engine installation" , timer_instance.dateAndtime() + "A new version <b>" + version + "</b> of the Geckodriver web browser engine has been downloaded and is ready for installation.<br>CarClickerBot will run again.<br><br>" + "Made in Python", ToMe)
-                                    self.send_email("⚙️🛠️ New engine installation" , timer_instance.dateAndtime() + "A new version <b>" + version + "</b> of the Geckodriver web browser engine has been downloaded and is ready for installation.<br>CarClickerBot will run again.<br><br>" + "Made in Python", ToMe)
+                                    self.send_email("⚙️🛠️ New engine installation" , timer_instance.dateAndtime() + "A new version <b>" + version + "</b> of the Geckodriver web browser engine has been downloaded and is ready for installation.<br>CarClickerBot will run again.<br><br>" + "Made in Python", ToOther)
                                     os.system('tar -xvzf ' + str(filename))
                                     os.system('sudo mv geckodriver /usr/local/bin')
                                     os.system('export PATH=$PATH:/usr/local/bin/geckodriver')
@@ -859,7 +859,7 @@ class reset:
 class launch:
     @staticmethod
     def launch_program():
-        global initialize_instance
+        global initialize_instance , last_upgrade_version
         try:
             fileSettings_instance = fileSettings()
             #initialize_instance = initialize(instance)
@@ -869,7 +869,7 @@ class launch:
             internet_instance.error_and_back_to_internet()
             print('====================================================')
             print("              CarClickerBot launched!\n====================================================\n" + \
-            "                  Made in Python\n====================================================\n")
+            "                  Made in Python\n" + "                     " + last_upgrade_version + "\n====================================================\n")
             print("Step 1: Checking emails")
             email_instance.read_email()
             link_site = "https://www.car.gr"
@@ -1008,8 +1008,8 @@ class launch:
                             timer_instance = timer()
                             timer_instance.time_correction()
                             if( int(fileTotal_R.read()) == 1):
-                                actions = 'Insert a new machine or delete an existing<br>one, update to the latest version of app,<br>receive a feedback, reset the app, change<br>the username/password or set a new<br>web browser engine.<br>Do all these stuff by sending an email.<br><br>'
-                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>Last upgrade: " + last_upgrade + "<br>Number of machines: " + \
+                                actions = 'Insert a new machine or delete an existing<br>one, update to the latest version of app,<br>receive a feedback, reset the app, change<br>the username/password or set a new<br>geckodriver web browser engine.<br>Do all these stuff by sending an email.<br><br>'
+                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + last_upgrade_version + "<br>Number of machines: " + \
                                                     str(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) + \
                                                     "<br><br><b>Actions</b>:<br>" + actions + "● &nbsp;Send an email to " + str(FROM_EMAIL) + "<br>" + "&nbsp;" * 4 + "     with subject: 'Insert'" + "<br>" + "&nbsp;" * 4 + \
                                                     "     and message: The link-machine" + "<br>" + "&nbsp;" * 4 + " you want to add.<br><br> \
@@ -1029,7 +1029,7 @@ class launch:
                                                     "     and message: Import the file.<br><br>" \
                                                 "A notification will be sent.<br><br>" + "Made in Python" , ToMe)
                                 
-                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>Last upgrade: " + last_upgrade + "<br>Number of machines: " + \
+                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + last_upgrade_version + "<br>Number of machines: " + \
                                                     str(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) + \
                                                     "<br><br><b>Actions</b>:<br>" + actions + "● &nbsp;Send an email to " + str(FROM_EMAIL) + "<br>" + "&nbsp;" * 4 + "     with subject: 'Insert'" + "<br>" + "&nbsp;" * 4 + \
                                                     "     and message: The link-machine" + "<br>" + "&nbsp;" * 4 + " you want to add.<br><br> \
