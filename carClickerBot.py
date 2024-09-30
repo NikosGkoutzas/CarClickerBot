@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Sep 29 2024
+# --------------- Last update: Sep 30 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "V29.09.24"
+last_upgrade_version = "V30.09.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -796,9 +796,9 @@ class _email_:
 class reset:
     @staticmethod
     def reset_files(allFiles):
-        initializer_instance = initialize()
-        initializer_instance.clear_geckodriver_log()
         fileSettings_instance = fileSettings()
+        initializer_instance = initialize(fileSettings_instance)
+        initializer_instance.clear_geckodriver_log()
 
         file = open("updateNumber.txt", "w")    # open the file
         file.write(str(0))   # write the number in the file
@@ -863,7 +863,6 @@ class launch:
         global initialize_instance , last_upgrade_version
         try:
             fileSettings_instance = fileSettings()
-            #initialize_instance = initialize(instance)
             reset_instance = reset()
             email_instance = _email_()
             internet_instance = internet()
@@ -1156,7 +1155,7 @@ class launch:
 
         except OSError:
             print("====================================================\\nAn OS error occured. Trying again...\n====================================================\\n")
-            initialize_instance = initialize()
+            initialize_instance = initialize(fileSettings_instance)
             timer_instance = timer()
             email_instance = _email_()
             email_instance.send_email("🚨 Unknown error" , timer_instance.dateAndtime() + "App stopped running due to an OS exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
