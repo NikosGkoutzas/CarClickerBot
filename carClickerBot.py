@@ -594,7 +594,7 @@ class _email_:
                                 time.sleep(7 * 60)  # sleep for 7 minutes
                                 print("The new version will be run at a moment...")
                                 print("====================================================")
-                                os.system("wget 'https://github.com/NickGkoutzas/autoClicker/raw/main/carClickerBot.py' && mv carClickerBot.py.1 carClickerBot.py")
+                                os.system("wget 'https://github.com/NikosGkoutzas/CarClickerBot/raw/main/carClickerBot.py' && mv carClickerBot.py.1 carClickerBot.py")
                                 fileSettings_instance.quit()   # quit firefox
                                 time.sleep(5)
                                 os.system("python3 carClickerBot.py")
