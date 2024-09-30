@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "V30.09.24"
+last_upgrade_version = "v30.09.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
