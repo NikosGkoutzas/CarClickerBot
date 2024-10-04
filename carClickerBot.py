@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Sep 30 2024
+# --------------- Last update: Oct 04 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v30.09.24"
+last_upgrade_version = "v04.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -1130,10 +1130,11 @@ class launch:
                         analytics_link = "https://www.car.gr/analytics/overview?date-from=1644962400&date-to=1644993347&fbclid=IwAR0PP4jRq9XOQROeGJIRON7gSMOO4RPUDBAEiJXrPPhg44pTBiZNRsS6vz4"
                         analytics_name_display = 'analytics'
                         analytics = f'<a href="{analytics_link}">{analytics_name_display}</a>'
+                        s = 's' if int(fileSettings_instance.read_total_errors("totalErrors.txt")) != 1 else ''
                         email_instance.send_email("📊 Statistical results" , timer_instance.dateAndtime() + "Check out " + analytics + "<br><br>" + successful_updates_of_day + "/" + str(dailyTotalUpdates) + " successful updates for " + \
-                        str(fileSettings.read_NumberOfMachines("NumberOfMachines.txt")) + "<br>machines in total with " + str(fileSettings_instance.read_total_errors("totalErrors.txt")) + " errors.<br><br>" + all_machines_updates_number + " <br><br>" + "Made in Python" , ToMe)
+                        str(fileSettings.read_NumberOfMachines("NumberOfMachines.txt")) + "<br>machines in total with " + str(fileSettings_instance.read_total_errors("totalErrors.txt")) + " error" + s + ".<br><br>" + all_machines_updates_number + " <br><br>" + "Made in Python" , ToMe)
                         email_instance.send_email("📊 Statistical results" , timer_instance.dateAndtime() + "Check out " + analytics + "<br><br>" + successful_updates_of_day + "/" + str(dailyTotalUpdates) + " successful updates for " + \
-                        str(fileSettings.read_NumberOfMachines("NumberOfMachines.txt")) + "<br>machines in total with " + str(fileSettings_instance.read_total_errors("totalErrors.txt")) + " errors.<br><br>" + all_machines_updates_number + "<br><br>" + "Made in Python" , ToOther)
+                        str(fileSettings.read_NumberOfMachines("NumberOfMachines.txt")) + "<br>machines in total with " + str(fileSettings_instance.read_total_errors("totalErrors.txt")) + " error" + s + ".<br><br>" + all_machines_updates_number + "<br><br>" + "Made in Python" , ToOther)
                         print("Emails just sent... Purpose: " + successful_updates_of_day + " updates were performed successfully.")
                         fileTotal.close()
                         fileEach.close()
