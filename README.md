@@ -1,7 +1,6 @@
 Application for Automated Listing Management on car.gr
 
 This Python-based application automates the management of listings on car.gr, ensuring that specific listings are regularly refreshed to appear higher in user searches. The application operates daily from 7:00 a.m. to 11:55 p.m., performing a total of 200 refreshes distributed evenly throughout the day.
-
 Application Features:
 
 	1.	Automated Listing Refresh:
