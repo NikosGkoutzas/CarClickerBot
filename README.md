@@ -11,15 +11,15 @@ Application Features:
 3.	Remote management via email:
    You can execute various functions via email, such as:
   
- •	Add or remove ads.
+      •	Add or remove ads.
 
- •	Remotely reset the application.
+      •	Remotely reset the application.
 
- •	Change username and password for logging into www.car.gr.
+      •	Change username and password for logging into www.car.gr.
 	  
- •	Upgrade the application to a new version.
+      •	Upgrade the application to a new version.
 	  
- •	Upgrade the Geckodriver, the web browser engine the application uses to implement actions in Firefox.
+      •	Upgrade the Geckodriver, the web browser engine the application uses to implement actions in Firefox.
 
 4.	Email notifications and statistics:
 	•	Every morning at 7:00 AM, you receive an email notification confirming the application’s startup, ensuring that the process began smoothly.
