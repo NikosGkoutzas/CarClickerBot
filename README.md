@@ -10,6 +10,7 @@ Application Features:
    Upon startup, the application automatically accepts the cookies on www.car.gr and then logs in using the stored username and password.
 3.	Remote management via email:
    You can execute various functions via email, such as:
+  
   •	Add or remove ads.
 
 	 •	Remotely reset the application.
