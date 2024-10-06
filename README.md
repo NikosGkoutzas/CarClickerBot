@@ -1,16 +1,16 @@
-Application for Automated Listing Management on car.gr
+Application for Automated Listing Management on www.car.gr
 
-This Python-based application automates the management of listings on car.gr, ensuring that specific listings are regularly refreshed to appear higher in user searches. The application operates daily from 7:00 a.m. to 11:55 p.m., performing a total of 200 refreshes distributed evenly throughout the day.
+This Python-based application automates the management of listings on www.car.gr, ensuring that specific listings are regularly refreshed to appear higher in user searches. The application operates daily from 7:00 a.m. to 11:55 p.m., performing a total of 200 refreshes distributed evenly throughout the day.
 Application Features:
 
 1.	Automated Listing Refresh:
-The application automatically clicks on listings on car.gr to refresh them. The 200 refreshes are evenly distributed during the day to maximize the visibility of each listing.
+The application automatically clicks on listings on www.car.gr to refresh them. The 200 refreshes are evenly distributed during the day to maximize the visibility of each listing.
 
 2.	Remote Management via Email:
     The application can be managed remotely by sending emails to a specified address. The following actions can be performed via email:
 	•	Add or delete listings.
 	•	Remotely reset the application.
-	•	Change the username and password used to log in to car.gr.
+	•	Change the username and password used to log in to www.car.gr.
 	•	Upgrade the application to a newer version.
 
 3.	Email Notifications and Reporting:
@@ -31,4 +31,4 @@ Email-Based Management: All operations can be controlled remotely by sending com
 Automated Click Refresh: Targeted clicks on listings to boost visibility in user searches.
 Data Persistence: The data is securely stored in files to ensure recovery after unexpected shutdowns.
 
-This application provides a comprehensive solution for automated listing management on car.gr, offering flexible remote control, real-time monitoring, and secure data handling to ensure continuous operations and maximized listing visibility.
+This application provides a comprehensive solution for automated listing management on www.car.gr, offering flexible remote control, real-time monitoring, and secure data handling to ensure continuous operations and maximized listing visibility.
