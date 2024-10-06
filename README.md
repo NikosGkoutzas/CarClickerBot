@@ -7,7 +7,7 @@ Application Features:
 The application automatically clicks on listings on car.gr to refresh them. The 200 refreshes are evenly distributed during the day to maximize the visibility of each listing.
 
 2.	Remote Management via Email:
-The application can be managed remotely by sending emails to a specified address. The following actions can be performed via email:
+    The application can be managed remotely by sending emails to a specified address. The following actions can be performed via email:
 	•	Add or delete listings.
 	•	Remotely reset the application.
 	•	Change the username and password used to log in to car.gr.
@@ -20,10 +20,10 @@ The application can be managed remotely by sending emails to a specified address
 	•	In the event of an internet outage, the application sends an email notification once the connection is restored, ensuring the refresh process resumes without issues.
 
 4.	Data Security and Recovery in Case of Power Failure:
-All application data is logged and saved to files, ensuring that no information is lost in the event of a power failure on the server. Once the server is back online, the application can continue its operations from where it left off.
+    All application data is logged and saved to files, ensuring that no information is lost in the event of a power failure on the server. Once the server is back online, the application can continue its operations from where it left off.
 
 5.	Automatic Restart:
-After the end of the day’s operations at 11:55 p.m., the application enters standby mode until 7:00 a.m. the next day, when it automatically restarts to begin the refresh process again.
+    After the end of the day’s operations at 11:55 p.m., the application enters standby mode until 7:00 a.m. the next day, when it automatically restarts to begin the refresh process again.
 
 Requirements and Key Technologies:
 Programming Language: The application is written in Python.
