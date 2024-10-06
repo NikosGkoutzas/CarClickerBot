@@ -1,36 +1,34 @@
-Περιγραφή Εφαρμογής για Αυτόματη Διαχείριση Αγγελιών στο www.car.gr
+Application Description for Automated Ad Management on www.car.gr
+This application, written in Python, automates the management of ads on www.car.gr, ensuring that ads are regularly refreshed to appear higher in user searches. The application runs daily from 7:00 AM to 11:55 PM, performing a total of 200 refreshes at regular intervals.
 
-Η εφαρμογή αυτή, γραμμένη σε Python, αυτοματοποιεί τη διαχείριση αγγελιών στο www.car.gr, διασφαλίζοντας ότι οι αγγελίες ανανεώνονται τακτικά ώστε να εμφανίζονται ψηλά στις αναζητήσεις των χρηστών. Η εφαρμογή λειτουργεί καθημερινά από τις 7:00 π.μ. έως τις 11:55 μ.μ., εκτελώντας συνολικά 200 ανανεώσεις σε τακτά διαστήματα.
+Application Features:
 
-Λειτουργίες της Εφαρμογής:
+1.	Automatic ad refresh:
+   The application automatically clicks on ads on www.car.gr to refresh them. The 200 refreshes are distributed evenly throughout the day.
+2.	Automatic cookie acceptance and account login:
+   Upon startup, the application automatically accepts the cookies on www.car.gr and then logs in using the stored username and password.
+3.	Remote management via email:
+   You can execute various functions via email, such as:
+ •	Add or remove ads.
+	•	Remotely reset the application.
+	•	Change username and password for logging into www.car.gr.
+	•	Upgrade the application to a new version.
+	•	Upgrade the Geckodriver, the web browser engine the application uses to implement actions in Firefox.
+4.	Email notifications and statistics:
+	•	Every morning at 7:00 AM, you receive an email notification confirming the application’s startup, ensuring that the process began smoothly.
+	•	After the application finishes at 11:55 PM, you receive an email with statistics about the ad refreshes.
+	•	Throughout the day, the application sends email notifications for various processes, such as ad addition/removal, reset, or application upgrade.
+	•	If an error occurs (e.g., failure to accept cookies, unsuccessful login, or a button press failure), the application immediately sends an email notification and terminates, requiring manual intervention to resolve the issue and restart the program.
+	•	If there’s an internet connection failure, the application notifies you as soon as the connection is restored, ensuring that the refresh process resumes as normal.
+5.	Data security and recovery in case of power failure:
+   All application data is logged and stored in files, so in case of a power outage on the server, no information is lost. Once the system is restored, the application can resume from where it left off.
+6.	Automatic restart:
+   After the daily process ends at 11:55 PM, the application enters a standby mode until 7:00 AM the following day, when it restarts and continues refreshing the ads.
 
-1.	Αυτόματη ανανέωση αγγελιών:
-   Η εφαρμογή πραγματοποιεί αυτόματα κλικ σε αγγελίες στο www.car.gr για την ανανέωσή τους. Οι 200 ανανεώσεις κατανέμονται ισότιμα καθ’ όλη τη διάρκεια της ημέρας.
-2.	Αυτόματη αποδοχή cookies και είσοδος λογαριασμού:
-   Κατά την εκκίνηση, η εφαρμογή αποδέχεται αυτόματα τα cookies του ιστότοπου www.car.gr και στη συνέχεια πραγματοποιεί είσοδο χρησιμοποιώντας τα αποθηκευμένα username και password.
-3.	Απομακρυσμένη διαχείριση μέσω email:
-   Μέσω email, μπορείς να εκτελέσεις διάφορες λειτουργίες, όπως:
-	•	Εισαγωγή ή διαγραφή αγγελιών.
-	•	Απομακρυσμένη επανεκκίνηση (reset) της εφαρμογής.
-	•	Αλλαγή username και password για την είσοδο στο www.car.gr.
-	•	Αναβάθμιση της εφαρμογής σε νέα έκδοση.
-	•	Αναβάθμιση του Geckodriver, του web browser engine που χρησιμοποιεί η εφαρμογή για την υλοποίηση στο Firefox.
-4.	Αποστολή ειδοποιήσεων (notifications) και στατιστικών μέσω email:
-	•	Κάθε πρωί, στις 7:00 π.μ., λαμβάνεις email ενημέρωσης για την εκκίνηση της εφαρμογής, επιβεβαιώνοντας ότι η διαδικασία ξεκίνησε ομαλά.
-	•	Μετά την ολοκλήρωση της λειτουργίας στις 11:55 μ.μ., λαμβάνεις email με στατιστικά στοιχεία των ανανεώσεων.
-	•	Κατά τη διάρκεια της ημέρας, η εφαρμογή στέλνει email notifications για επιμέρους διαδικασίες, όπως εισαγωγή/διαγραφή αγγελιών, επανεκκίνηση ή αναβάθμιση της εφαρμογής.
-	•	Σε περίπτωση που παρουσιαστεί κάποιο σφάλμα (π.χ. αποτυχία στην αποδοχή των cookies, μη επιτυχής είσοδος στο λογαριασμό ή αποτυχία στο πάτημα ενός κουμπιού), η εφαρμογή στέλνει άμεσα email ειδοποίησης και τερματίζεται, απαιτώντας χειροκίνητο έλεγχο για να επιλυθεί το πρόβλημα και να επανεκκινήσει το πρόγραμμα.
-	•	Αν υπάρξει διακοπή της σύνδεσης στο διαδίκτυο, η εφαρμογή σε ειδοποιεί μόλις αποκατασταθεί η σύνδεση, εξασφαλίζοντας ότι η διαδικασία των ανανεώσεων θα συνεχιστεί κανονικά.
-5.	Ασφάλεια δεδομένων και αποκατάσταση σε περίπτωση διακοπής ρεύματος:
-   Όλα τα δεδομένα της εφαρμογής καταγράφονται και αποθηκεύονται σε αρχεία, ώστε, σε περίπτωση διακοπής ρεύματος στον server, να μην χαθούν πληροφορίες. Όταν η λειτουργία επανέλθει, η εφαρμογή μπορεί να συνεχίσει από το σημείο που σταμάτησε.
-6.	Αυτόματη επανεκκίνηση:
-Μετά τη λήξη της λειτουργίας στις 11:55 μ.μ., η εφαρμογή σταματά και τίθεται σε κατάσταση αναμονής μέχρι τις 7:00 π.μ. της επόμενης ημέρας, οπότε ξεκινά εκ νέου τις ανανεώσεις.
+Requirements and Key Technologies:
+ •	Programming language: The application is written in Python.
+ •	Email management: All functions of the application are managed remotely via email.
+	•	Automated clicks for ad refreshes: Targeted ad refreshing to increase visibility.
+	•	Data storage: All data is securely saved to ensure recovery in case of system failures.
 
-Προϋποθέσεις και Βασικές Τεχνολογίες:
-
-Γλώσσα προγραμματισμού: Η εφαρμογή είναι γραμμένη σε Python.
-Διαχείριση μέσω email: Όλες οι λειτουργίες της εφαρμογής διαχειρίζονται απομακρυσμένα μέσω email.
-Ανανεώσεις μέσω αυτόματων κλικ: Στόχευση συγκεκριμένων αγγελιών για αύξηση προβολών.
-Αποθήκευση δεδομένων: Τα δεδομένα αποθηκεύονται με ασφάλεια για αποκατάσταση σε περίπτωση διακοπής λειτουργίας.
-
-Αυτή η εφαρμογή προσφέρει μια ολοκληρωμένη λύση για την αυτοματοποιημένη διαχείριση αγγελιών στο www.car.gr, παρέχοντας ευέλικτη διαχείριση, άμεση παρακολούθηση σε πραγματικό χρόνο και ασφάλεια δεδομένων.
+This application provides a comprehensive solution for the automated management of ads on www.car.gr, offering flexible control, real-time monitoring, and secure data handling.
