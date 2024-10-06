@@ -1,34 +1,36 @@
-Application for Automated Listing Management on www.car.gr
+Περιγραφή Εφαρμογής για Αυτόματη Διαχείριση Αγγελιών στο www.car.gr
 
-This Python-based application automates the management of listings on www.car.gr, ensuring that specific listings are regularly refreshed to appear higher in user searches. The application operates daily from 7:00 a.m. to 11:55 p.m., performing a total of 200 refreshes distributed evenly throughout the day.
-Application Features:
+Η εφαρμογή αυτή, γραμμένη σε Python, αυτοματοποιεί τη διαχείριση αγγελιών στο www.car.gr, διασφαλίζοντας ότι οι αγγελίες ανανεώνονται τακτικά ώστε να εμφανίζονται ψηλά στις αναζητήσεις των χρηστών. Η εφαρμογή λειτουργεί καθημερινά από τις 7:00 π.μ. έως τις 11:55 μ.μ., εκτελώντας συνολικά 200 ανανεώσεις σε τακτά διαστήματα.
 
-1.	Automated Listing Refresh:
-The application automatically clicks on listings on www.car.gr to refresh them. The 200 refreshes are evenly distributed during the day to maximize the visibility of each listing.
+Λειτουργίες της Εφαρμογής:
 
-2.	Remote Management via Email:
-    The application can be managed remotely by sending emails to a specified address. The following actions can be performed via email:
-	•	Add or delete listings.
-	•	Remotely reset the application.
-	•	Change the username and password used to log in to www.car.gr.
-	•	Upgrade the application to a newer version.
+	1.	Αυτόματη ανανέωση αγγελιών:
+Η εφαρμογή πραγματοποιεί αυτόματα κλικ σε αγγελίες στο www.car.gr για την ανανέωσή τους. Οι 200 ανανεώσεις κατανέμονται ισότιμα καθ’ όλη τη διάρκεια της ημέρας.
+	2.	Αυτόματη αποδοχή cookies και είσοδος λογαριασμού:
+Κατά την εκκίνηση, η εφαρμογή αποδέχεται αυτόματα τα cookies του ιστότοπου www.car.gr και στη συνέχεια πραγματοποιεί είσοδο χρησιμοποιώντας τα αποθηκευμένα username και password.
+	3.	Απομακρυσμένη διαχείριση μέσω email:
+Μέσω email, μπορείς να εκτελέσεις διάφορες λειτουργίες, όπως:
+	•	Εισαγωγή ή διαγραφή αγγελιών.
+	•	Απομακρυσμένη επανεκκίνηση (reset) της εφαρμογής.
+	•	Αλλαγή username και password για την είσοδο στο www.car.gr.
+	•	Αναβάθμιση της εφαρμογής σε νέα έκδοση.
+	•	Αναβάθμιση του Geckodriver, του web browser engine που χρησιμοποιεί η εφαρμογή για την υλοποίηση στο Firefox.
+	4.	Αποστολή ειδοποιήσεων (notifications) και στατιστικών μέσω email:
+	•	Κάθε πρωί, στις 7:00 π.μ., λαμβάνεις email ενημέρωσης για την εκκίνηση της εφαρμογής, επιβεβαιώνοντας ότι η διαδικασία ξεκίνησε ομαλά.
+	•	Μετά την ολοκλήρωση της λειτουργίας στις 11:55 μ.μ., λαμβάνεις email με στατιστικά στοιχεία των ανανεώσεων.
+	•	Κατά τη διάρκεια της ημέρας, η εφαρμογή στέλνει email notifications για επιμέρους διαδικασίες, όπως εισαγωγή/διαγραφή αγγελιών, επανεκκίνηση ή αναβάθμιση της εφαρμογής.
+	•	Σε περίπτωση που παρουσιαστεί κάποιο σφάλμα (π.χ. αποτυχία στην αποδοχή των cookies, μη επιτυχής είσοδος στο λογαριασμό ή αποτυχία στο πάτημα ενός κουμπιού), η εφαρμογή στέλνει άμεσα email ειδοποίησης και τερματίζεται, απαιτώντας χειροκίνητο έλεγχο για να επιλυθεί το πρόβλημα και να επανεκκινήσει το πρόγραμμα.
+	•	Αν υπάρξει διακοπή της σύνδεσης στο διαδίκτυο, η εφαρμογή σε ειδοποιεί μόλις αποκατασταθεί η σύνδεση, εξασφαλίζοντας ότι η διαδικασία των ανανεώσεων θα συνεχιστεί κανονικά.
+	5.	Ασφάλεια δεδομένων και αποκατάσταση σε περίπτωση διακοπής ρεύματος:
+Όλα τα δεδομένα της εφαρμογής καταγράφονται και αποθηκεύονται σε αρχεία, ώστε, σε περίπτωση διακοπής ρεύματος στον server, να μην χαθούν πληροφορίες. Όταν η λειτουργία επανέλθει, η εφαρμογή μπορεί να συνεχίσει από το σημείο που σταμάτησε.
+	6.	Αυτόματη επανεκκίνηση:
+Μετά τη λήξη της λειτουργίας στις 11:55 μ.μ., η εφαρμογή σταματά και τίθεται σε κατάσταση αναμονής μέχρι τις 7:00 π.μ. της επόμενης ημέρας, οπότε ξεκινά εκ νέου τις ανανεώσεις.
 
-3.	Email Notifications and Reporting:
-	•	Every day at 7:00 a.m., you receive an email notification confirming the application has started, ensuring that the process begins smoothly.
-	•	After the application completes its cycle at 11:55 p.m., you receive an email containing detailed statistics about the refreshed listings.
-	•	During the day, the application sends real-time email notifications for important actions, such as listing additions/deletions, resets, or upgrades.
-	•	In the event of an internet outage, the application sends an email notification once the connection is restored, ensuring the refresh process resumes without issues.
+Προϋποθέσεις και Βασικές Τεχνολογίες:
 
-4.	Data Security and Recovery in Case of Power Failure:
-    All application data is logged and saved to files, ensuring that no information is lost in the event of a power failure on the server. Once the server is back online, the application can continue its operations from where it left off.
+	•	Γλώσσα προγραμματισμού: Η εφαρμογή είναι γραμμένη σε Python.
+	•	Διαχείριση μέσω email: Όλες οι λειτουργίες της εφαρμογής διαχειρίζονται απομακρυσμένα μέσω email.
+	•	Ανανεώσεις μέσω αυτόματων κλικ: Στόχευση συγκεκριμένων αγγελιών για αύξηση προβολών.
+	•	Αποθήκευση δεδομένων: Τα δεδομένα αποθηκεύονται με ασφάλεια για αποκατάσταση σε περίπτωση διακοπής λειτουργίας.
 
-5.	Automatic Restart:
-    After the end of the day’s operations at 11:55 p.m., the application enters standby mode until 7:00 a.m. the next day, when it automatically restarts to begin the refresh process again.
-
-Requirements and Key Technologies:
-Programming Language: The application is written in Python.
-Email-Based Management: All operations can be controlled remotely by sending commands via email.
-Automated Click Refresh: Targeted clicks on listings to boost visibility in user searches.
-Data Persistence: The data is securely stored in files to ensure recovery after unexpected shutdowns.
-
-This application provides a comprehensive solution for automated listing management on www.car.gr, offering flexible remote control, real-time monitoring, and secure data handling to ensure continuous operations and maximized listing visibility.
+Αυτή η εφαρμογή προσφέρει μια ολοκληρωμένη λύση για την αυτοματοποιημένη διαχείριση αγγελιών στο www.car.gr, παρέχοντας ευέλικτη διαχείριση, άμεση παρακολούθηση σε πραγματικό χρόνο και ασφάλεια δεδομένων.
