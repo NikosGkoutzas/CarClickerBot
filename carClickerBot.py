@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Oct 04 2024
+# --------------- Last update: Oct 08 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v04.10.24"
+last_upgrade_version = "v08.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -423,7 +423,7 @@ class _email_:
                     arr = response_part[0]
                     if isinstance(arr, tuple):
                         msg = email.message_from_string(str(arr[1],'utf-8'))
-                        email_subject = msg['subject']
+                        email_subject = msg['subject'].strip()
                         email_date = msg['Date']
 
                 for part in msg.walk():
