@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Oct 08 2024
+# --------------- Last update: Oct 12 2024
 # ----------------------------------------
 
 from selenium import webdriver
