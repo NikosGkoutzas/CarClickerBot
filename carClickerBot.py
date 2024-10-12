@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v08.10.24"
+last_upgrade_version = "v12.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -69,7 +69,7 @@ class driver:
                 email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure." , ToMe)
                 email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure." , ToOther)
                 print('CarClickerBot can\'t login due to\nbutton code search failure.')
-            sys.exit(0)
+            os.execv(sys.executable, ["python3"] + sys.argv)
         # driver return the button using the css selector
 
 
