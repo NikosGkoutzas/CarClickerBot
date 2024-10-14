@@ -1051,7 +1051,6 @@ class launch:
                                 print("Updates started at " + timer_instance.dateAndtime() + '\b'*8 + ". Emails sent.")
                                 fileTotal_R.close()
 
-                            now = datetime.datetime.now()
                             timer_instance.time_correction()
                             print("Total updates until now, (" + str(timer_instance.hour__) + ":" + str(timer_instance.min__) + ":" + str(timer_instance.sec__) + "): " , end = "" , flush = True)
                             if( int (open("totalUpdates.txt").read() ) <= 9):
