@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Oct 12 2024
+# --------------- Last update: Oct 14 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v12.10.24"
+last_upgrade_version = "v14.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -31,7 +31,7 @@ dailyTotalUpdates = 200
 class driver:
     def __init__(self):
         options = Options()
-        options.add_argument('--headless') # hide firefox window
+        #options.add_argument('--headless') # hide firefox window
         self.driver = webdriver.Firefox(options=options) # call Firefox
 
     def openUrl(self , url):
@@ -69,7 +69,7 @@ class driver:
                 email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure." , ToMe)
                 email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure." , ToOther)
                 print('CarClickerBot can\'t login due to\nbutton code search failure.')
-            os.execv(sys.executable, ["python3"] + sys.argv)
+            sys.exit(0)
         # driver return the button using the css selector
 
 
