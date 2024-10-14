@@ -31,7 +31,7 @@ dailyTotalUpdates = 200
 class driver:
     def __init__(self):
         options = Options()
-        #options.add_argument('--headless') # hide firefox window
+        options.add_argument('--headless') # hide firefox window
         self.driver = webdriver.Firefox(options=options) # call Firefox
 
     def openUrl(self , url):
