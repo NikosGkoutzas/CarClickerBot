@@ -1157,8 +1157,8 @@ class launch:
             initialize_instance = initialize(fileSettings_instance)
             timer_instance = timer()
             email_instance = _email_()
-            email_instance.send_email("🚨 Unknown error" , timer_instance.dateAndtime() + "App stopped running due to an OS exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
-            email_instance.send_email("🚨 Unknown error" , timer_instance.dateAndtime() + "App stopped running due to an OS exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
+            email_instance.send_email("🚨 Unknown error" , timer_instance.dateAndtime() + "App stopped running due to an unknown exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
+            email_instance.send_email("🚨 Unknown error" , timer_instance.dateAndtime() + "App stopped running due to an unknown exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
             current_time = datetime.datetime.now().time()   # get current time
             if(not current_time < initialize_instance.on_time and not current_time >= initialize_instance.off_time):
                 email_instance.read_email()
