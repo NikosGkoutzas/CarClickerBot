@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Oct 14 2024
+# --------------- Last update: Oct 23 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v14.10.24"
+last_upgrade_version = "v23.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -31,7 +31,7 @@ dailyTotalUpdates = 200
 class driver:
     def __init__(self):
         options = Options()
-        options.add_argument('--headless') # hide firefox window
+        #options.add_argument('--headless') # hide firefox window
         self.driver = webdriver.Firefox(options=options) # call Firefox
 
     def openUrl(self , url):
@@ -1142,9 +1142,8 @@ class launch:
                         reset_instance.reset_files(True)
 
                         # executes only once per day...
-                        print("Sleeping till next day...")
-                        time.sleep(10*60)
                         print("Waiting till 06:59:50 pm ...")
+                        time.sleep(10*60)
                         timer_instance = timer()
                         time.sleep( timer_instance.computeTimeSleep(6 , 59 , 50) )  # sleep till tomorrow morning at 7pm                
                         
@@ -1153,8 +1152,8 @@ class launch:
                         
 
 
-        except OSError:
-            print("====================================================\\nAn OS error occured. Trying again...\n====================================================\\n")
+        except:
+            print("====================================================\\nAn error occured. Trying again...\n====================================================\\n")
             initialize_instance = initialize(fileSettings_instance)
             timer_instance = timer()
             email_instance = _email_()
