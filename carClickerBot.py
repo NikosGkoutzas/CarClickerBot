@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Oct 23 2024
+# --------------- Last update: Oct 24 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v23.10.24"
+last_upgrade_version = "v24.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -595,9 +595,8 @@ class _email_:
                                 print("The new version will be run at a moment...")
                                 print("====================================================")
                                 os.system("wget 'https://github.com/NikosGkoutzas/CarClickerBot/raw/main/carClickerBot.py' && mv carClickerBot.py.1 carClickerBot.py")
-                                fileSettings_instance.quit()   # quit firefox
-                                time.sleep(5)
-                                os.system("python3 carClickerBot.py")
+                                driver_instance.quit()   # quit firefox
+                                os.execv(sys.executable, ["python3"] + sys.argv) 
 
 
                     if(email_subject == "feedback" or email_subject == "Feedback"):
