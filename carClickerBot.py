@@ -1073,7 +1073,9 @@ class launch:
                     
                     
                     if(fileSettings_instance.readTotalUpdates() == dailyTotalUpdates ):
-                        print( str(dailyTotalUpdates) + " updates have been performed before 23:55:00. Sleeping till 23:55:00 ...")
+                        print("====================================================")
+                        print( str(dailyTotalUpdates) + " updates have been performed before 23:55:00.\nSleeping till 23:55:00 ...")
+                        print("====================================================")
                         timer_instance = timer()
                         sleep__ = timer_instance.computeTimeSleep(23 , 55 , 0)
                         time.sleep(sleep__)
@@ -1185,6 +1187,7 @@ class launch:
             driver_instance.quit()   # quit firefox
             os.execv(sys.executable, ["python3"] + sys.argv)    # run again from the top
         
+
 
 
 
