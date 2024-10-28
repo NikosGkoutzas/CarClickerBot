@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Oct 24 2024
+# --------------- Last update: Oct 28 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v24.10.24"
+last_upgrade_version = "v28.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -1144,6 +1144,7 @@ class launch:
                         print("Waiting till 06:59:50 pm ...")
                         time.sleep(10*60)
                         timer_instance = timer()
+                        timer_.time_correction()
                         time.sleep( timer_instance.computeTimeSleep(6 , 59 , 50) )  # sleep till tomorrow morning at 7pm                
                         
                         driver_instance.quit()   # quit firefox
