@@ -1089,6 +1089,7 @@ class launch:
                     
 
                 elif(current_time > initialize_instance.off_time):
+                    print("====================================================")
                     print('Last step: Extracting statistical results')
                     with open("totalUpdates.txt") as fileTotal , open("MachinesEachUpdate.txt") as fileEach , open('URL_machines.txt') as machines:
                         machine_display = []
@@ -1135,7 +1136,8 @@ class launch:
                         str(fileSettings.read_NumberOfMachines("NumberOfMachines.txt")) + "<br>machines in total with " + str(fileSettings_instance.read_total_errors("totalErrors.txt")) + " error" + s + ".<br><br>" + all_machines_updates_number + " <br><br>" + "Made in Python" , ToMe)
                         email_instance.send_email("📊 Statistical results" , timer_instance.dateAndtime() + "Check out " + analytics + "<br><br>" + successful_updates_of_day + "/" + str(dailyTotalUpdates) + " successful updates for " + \
                         str(fileSettings.read_NumberOfMachines("NumberOfMachines.txt")) + "<br>machines in total with " + str(fileSettings_instance.read_total_errors("totalErrors.txt")) + " error" + s + ".<br><br>" + all_machines_updates_number + "<br><br>" + "Made in Python" , ToOther)
-                        print("Emails just sent... Purpose: " + successful_updates_of_day + " updates were performed successfully.")
+                        print("Emails just sent...\n" + successful_updates_of_day + "/200 updates were performed successfully.")
+                        print("====================================================")
                         fileTotal.close()
                         fileEach.close()
 
@@ -1146,7 +1148,7 @@ class launch:
                         print("Waiting till 06:59:50 pm ...")
                         time.sleep(10*60)
                         timer_instance = timer()
-                        timer_.time_correction()
+                        timer_instance.time_correction()
                         time.sleep( timer_instance.computeTimeSleep(6 , 59 , 50) )  # sleep till tomorrow morning at 7pm                
                         
                         driver_instance.quit()   # quit firefox
