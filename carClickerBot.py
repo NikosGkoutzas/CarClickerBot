@@ -15,7 +15,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v29.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -23,6 +22,7 @@ ToMe = lines[2].strip()
 ToOther = lines[3].strip()
 site_username = lines[4].strip()
 site_password = lines[5].strip()
+app_version = lines[6].strip()
 PATH_NAME = os.getcwd() + '/'
 dailyTotalUpdates = 200
 
@@ -181,7 +181,7 @@ class fileSettings:
         # show how many feedbacks are made today.
 
     @staticmethod
-    def write_changeUsername_or_password(userOrPassw , index):
+    def write_changeUsername_or_password_or_version(userOrPassw , index):
         with open('passwords.txt', 'r') as file:
             lines = file.readlines()
 
@@ -293,12 +293,23 @@ class timer:
 
     def dateAndtime(self):
         today = date.today()
-        correct_day = '0' if today.day  < 10 else ''
-        correct_month = '0' if today.month  < 10 else ''
-        correct_year = '0' if today.year  < 10 else ''
+        correct_day = '0' if today.day < 10 else ''
+        correct_month = '0' if today.month < 10 else ''
+        correct_year = '0' if today.year < 10 else ''
         str_date = correct_day + str(today.day) + "/" + correct_month + str(today.month) + "/" + correct_year + str(today.year)
 
         return str_date + ', ' + self.time_correction()[3] + '<br><br>'
+        # return date and time
+
+    def getVersion(self):
+        today = date.today()
+        correct_day = ('0' if today.day < 10 else '') + str(today.day)
+        correct_month = ('0' if today.month < 10 else '') + str(today.month)
+        correct_year = ('0' if today.year < 10 else '') + str(today.year)
+        hour = self.time_correction()[2]
+        min = self.time_correction()[1]
+        return "v" + correct_day + "." + correct_month + "." + correct_year[2:] + "." + hour + "." + min
+        # return the version of the app
     
     @staticmethod
     def computeDelay(endTimeHours , endTimeMinutes , endTimeSeconds):
@@ -404,7 +415,7 @@ class _email_:
 
 
     def read_email(self):
-        global FROM_EMAIL , FROM_PWD , site_username , site_password , last_upgrade_version
+        global FROM_EMAIL , FROM_PWD , site_username , site_password , app_version
         try:
             timer_instance = timer()
             fileSettings_instance = fileSettings()
@@ -584,10 +595,11 @@ class _email_:
                                 timer_instance.time_correction()
                                 fileSettings_instance.write_GitHubUpdatesNumber("GitHubUpdatesNumber.txt" , fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt") + 1 ) # increase 'update' number (GitHub upates) by 1
                                 print("====================================================")
+                                new_app_version = fileSettings_instance.write_changeUsername_or_password_or_version(str( timer_instance.getVersion() ) , 6)
                                 print("The app stopped running for the next 7 minutes.\nA new version will be automatically\ndownloaded from GitHub. Do not interrupt operation.\nTime: " + str(timer_instance.hour__) + ":" + str(timer_instance.min__) + ":" + str(timer_instance.sec__) )
-                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes. The old version<b> " + last_upgrade_version + "</b> removed<br>and the new one will be automatically<br>downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
+                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes.<br>The old version<b> " + app_version + "</b> removed<br>and the new one<b> " + new_app_version + "</b> will be<br>automatically downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
                                                 ": " + str(fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt")) + "<br><br>" + "Made in Python", ToMe)
-                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes. The old version<b> " + last_upgrade_version + "</b> removed<br>and the new one will be automatically<br>downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
+                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes.<br>The old version<b> " + app_version + "</b> removed<br>and the new one<b> " + new_app_version + "</b> will be<br>automatically downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
                                                 ": " + str(fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt")) + "<br><br>" + "Made in Python", ToOther)
 
                                 print("====================================================")
@@ -711,7 +723,7 @@ class _email_:
                             if(email_subject == 'username' or email_subject == 'Username'):
                                 if(body != site_username):
                                     site_username = body
-                                    fileSettings_instance.write_changeUsername_or_password(str(body) , 4)
+                                    fileSettings_instance.write_changeUsername_or_password_or_version(str(body) , 4)
                                     print("====================================================")
                                     print("Username successfully changed!")
                                     print("====================================================")
@@ -721,7 +733,7 @@ class _email_:
                             else:
                                 if(body != site_password):
                                     site_password = body
-                                    fileSettings_instance.write_changeUsername_or_password(str(body) , 5)
+                                    fileSettings_instance.write_changeUsername_or_password_or_version(str(body) , 5)
                                     print("====================================================")
                                     print("Password successfully changed!")
                                     print("====================================================")
@@ -859,7 +871,7 @@ class reset:
 class launch:
     @staticmethod
     def launch_program():
-        global initialize_instance , last_upgrade_version
+        global initialize_instance , app_version
         try:
             fileSettings_instance = fileSettings()
             reset_instance = reset()
@@ -867,8 +879,8 @@ class launch:
             internet_instance = internet()
             internet_instance.error_and_back_to_internet()
             print('====================================================')
-            print("              <b>CarClickerBot launched!</b>\n====================================================\n" + \
-            "                  <b>Made in Python</b>\n" + "                     " + last_upgrade_version + "\n====================================================\n")
+            print("              CarClickerBot launched!\n====================================================\n" + \
+            "      " + app_version + "        Made in Python\n====================================================\n")
             print("Step 1: Checking emails")
             email_instance.read_email()
             link_site = "https://www.car.gr"
@@ -1008,7 +1020,7 @@ class launch:
                             timer_instance.time_correction()
                             if( int(fileTotal_R.read()) == 1):
                                 actions = 'Insert a new machine or delete an existing<br>one, update to the latest version of app,<br>receive a feedback, reset the app, change<br>the username/password or set a new<br>geckodriver web browser engine.<br>Do all these stuff by sending an email.<br><br>'
-                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + last_upgrade_version + "<br>Number of machines: " + \
+                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
                                                     str(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) + \
                                                     "<br><br><b>Actions</b>:<br>" + actions + "● &nbsp;Send an email to " + str(FROM_EMAIL) + "<br>" + "&nbsp;" * 4 + "     with subject: 'Insert'" + "<br>" + "&nbsp;" * 4 + \
                                                     "     and message: The link-machine" + "<br>" + "&nbsp;" * 4 + " you want to add.<br><br> \
@@ -1028,7 +1040,7 @@ class launch:
                                                     "     and message: Import the file.<br><br>" \
                                                 "A notification will be sent.<br><br>" + "Made in Python" , ToMe)
                                 
-                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + last_upgrade_version + "<br>Number of machines: " + \
+                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
                                                     str(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) + \
                                                     "<br><br><b>Actions</b>:<br>" + actions + "● &nbsp;Send an email to " + str(FROM_EMAIL) + "<br>" + "&nbsp;" * 4 + "     with subject: 'Insert'" + "<br>" + "&nbsp;" * 4 + \
                                                     "     and message: The link-machine" + "<br>" + "&nbsp;" * 4 + " you want to add.<br><br> \
