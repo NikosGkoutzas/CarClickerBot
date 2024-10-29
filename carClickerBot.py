@@ -1,5 +1,5 @@
 # Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Oct 28 2024
+# --------------- Last update: Oct 29 2024
 # ----------------------------------------
 
 from selenium import webdriver
@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from email.header import decode_header
 
 
-last_upgrade_version = "v28.10.24"
+last_upgrade_version = "v29.10.24"
 lines = tuple(open("passwords.txt" , 'r'))
 FROM_EMAIL = lines[0].strip() 
 FROM_PWD = lines[1].strip()  
@@ -867,8 +867,8 @@ class launch:
             internet_instance = internet()
             internet_instance.error_and_back_to_internet()
             print('====================================================')
-            print("              CarClickerBot launched!\n====================================================\n" + \
-            "                  Made in Python\n" + "                     " + last_upgrade_version + "\n====================================================\n")
+            print("              <b>CarClickerBot launched!</b>\n====================================================\n" + \
+            "                  <b>Made in Python</b>\n" + "                     " + last_upgrade_version + "\n====================================================\n")
             print("Step 1: Checking emails")
             email_instance.read_email()
             link_site = "https://www.car.gr"
@@ -1125,7 +1125,7 @@ class launch:
                         all_machines_updates_number = ''
                         k = 0
                         for line in fileEach.readlines():
-                            all_machines_updates_number += str(line) + " updates for" + "&nbsp;" + machine_display[k] + "<br>"
+                            all_machines_updates_number += "<b>" + str(line) + "</b>" + " updates for" + "&nbsp;" + machine_display[k] + "<br>"
                             k += 1
                         successful_updates_of_day = str(fileTotal.read().strip())
                         analytics_link = "https://www.car.gr/analytics/overview?date-from=1644962400&date-to=1644993347&fbclid=IwAR0PP4jRq9XOQROeGJIRON7gSMOO4RPUDBAEiJXrPPhg44pTBiZNRsS6vz4"
@@ -1145,7 +1145,7 @@ class launch:
                         reset_instance.reset_files(True)
 
                         # executes only once per day...
-                        print("Waiting till 06:59:50 pm ...")
+                        print("Waiting till 7:00 AM ...")
                         time.sleep(10*60)
                         timer_instance = timer()
                         timer_instance.time_correction()
