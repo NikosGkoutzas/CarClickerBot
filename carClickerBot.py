@@ -1,6 +1,12 @@
-# Nick Gkoutzas - Feb 2022 ---------------
-# --------------- Last update: Oct 29 2024
-# ----------------------------------------
+######################################################################
+##   Developer/Programmer      Nikos Gkoutzas                       ##
+##   Start Date                Feb 2022                             ##
+##   Last upgrade              Oct 2024                             ##
+##   Email                     nickgkoutzasgmail.com                ##
+##   GitHub                    https://github.com/NikosGkoutzas/    ##
+##   Linkedin                  Nikos Gkoutzas                       ##
+##   The below software made in python and tested in Linux Ubuntu   ##
+######################################################################
 
 from selenium import webdriver
 from datetime import datetime , time , date
@@ -595,11 +601,11 @@ class _email_:
                                 timer_instance.time_correction()
                                 fileSettings_instance.write_GitHubUpdatesNumber("GitHubUpdatesNumber.txt" , fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt") + 1 ) # increase 'update' number (GitHub upates) by 1
                                 print("====================================================")
-                                new_app_version = fileSettings_instance.write_changeUsername_or_password_or_version(str( timer_instance.getVersion() ) , 6)
+                                app_version = fileSettings_instance.write_changeUsername_or_password_or_version(str( timer_instance.getVersion() ) , 6)
                                 print("The app stopped running for the next 7 minutes.\nA new version will be automatically\ndownloaded from GitHub. Do not interrupt operation.\nTime: " + str(timer_instance.hour__) + ":" + str(timer_instance.min__) + ":" + str(timer_instance.sec__) )
-                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes.<br>The old version<b> " + app_version + "</b> removed<br>and the new one<b> " + new_app_version + "</b> will be<br>automatically downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
+                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes.<br>The old version<b> " + app_version + "</b> removed<br>and the new one<b> " + app_version + "</b> will be<br>automatically downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
                                                 ": " + str(fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt")) + "<br><br>" + "Made in Python", ToMe)
-                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes.<br>The old version<b> " + app_version + "</b> removed<br>and the new one<b> " + new_app_version + "</b> will be<br>automatically downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
+                                self.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot stopped running for the next 7 minutes.<br>The old version<b> " + app_version + "</b> removed<br>and the new one<b> " + app_version + "</b> will be<br>automatically downloaded from GitHub.<br>Do not interrupt operation.<br>Number of update version" + \
                                                 ": " + str(fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt")) + "<br><br>" + "Made in Python", ToOther)
 
                                 print("====================================================")
@@ -1212,5 +1218,17 @@ if(__name__ == '__main__'):
     driver_instance = driver()
     fileSettings_instance = fileSettings()
     initialize_instance = initialize(fileSettings_instance)
-    launcher = launch()
-    launcher.launch_program()
+    #launcher = launch()
+    #launcher.launch_program()
+    timer_instance = timer()
+    timer_instance.time_correction()
+    email___ = _email_()
+    fileSettings_instance.write_GitHubUpdatesNumber("GitHubUpdatesNumber.txt" , fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt") + 1 ) # increase 'update' number (GitHub upates) by 1
+    print("====================================================")
+    new_app_version = timer_instance.getVersion()
+    fileSettings_instance.write_changeUsername_or_password_or_version(str( timer_instance.getVersion() ) , 6)
+    print("CarClickerBot has paused its operations for now.\nA new version will be automatically\ndownloaded from GitHub. Do not interrupt operation.\nTime: " + str(timer_instance.hour__) + ":" + str(timer_instance.min__) + ":" + str(timer_instance.sec__) )
+    email___.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot has paused its operations for now.<br>The old version<b> " + app_version + "</b> removed<br>and the new one<b> " + new_app_version + "</b> will be<br>automatically downloaded from GitHub.<br><b>Please do not interrupt the operation.</b><br>Number of update version" + \
+                    ": " + str(fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt")) + "<br><br>" + "Made in Python", ToMe)
+    email___.send_email("🛠️ New release version" , timer_instance.dateAndtime() + "CarClickerBot has paused its operations for now.<br>The old version<b> " + app_version + "</b> removed<br>and the new one<b> " + new_app_version + "</b> will be<br>automatically downloaded from GitHub.<br><b>Please do not interrupt the operation.</b><br>Number of update version" + \
+                    ": " + str(fileSettings_instance.read_GitHubUpdatesNumber("GitHubUpdatesNumber.txt")) + "<br><br>" + "Made in Python", ToOther)
