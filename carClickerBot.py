@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -36,9 +37,26 @@ dailyTotalUpdates = 200
 
 class driver:
     def __init__(self):
+        global driver_instance
         options = Options()
+        options.binary_location = '/usr/local/bin/firefox-dev'
+        service = Service(executable_path='/usr/local/bin/geckodriver')
         #options.add_argument('--headless') # hide firefox window
-        self.driver = webdriver.Firefox(options=options) # call Firefox
+        try:
+            self.driver = webdriver.Firefox(service=service , options=options) # call Firefox
+        except:
+            print("====================================================")
+            print("Firefox launch error. Trying to solve the issue...")
+            print("====================================================")
+            time.sleep(5)
+            fileSettings_instance = fileSettings()
+            email_instance = _email_()
+            timer_instance = timer()
+            fileSettings_instance.write_total_errors("totalErrors.txt")
+            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
+            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
+            os.execv(sys.executable, ["python3"] + sys.argv) 
+
 
     def openUrl(self , url):
         try:
@@ -625,6 +643,7 @@ class _email_:
                                 print("The new version will be run at a moment...")
                                 print("====================================================")
                                 os.system("wget 'https://github.com/NikosGkoutzas/CarClickerBot/raw/main/carClickerBot.py' && mv carClickerBot.py.1 carClickerBot.py")
+                                time.sleep(5)
                                 driver_instance.quit()   # quit firefox
                                 os.execv(sys.executable, ["python3"] + sys.argv) 
 
@@ -1229,4 +1248,3 @@ if(__name__ == '__main__'):
     initialize_instance = initialize(fileSettings_instance)
     launcher = launch()
     launcher.launch_program()
-    
