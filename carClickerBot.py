@@ -338,7 +338,7 @@ class timer:
         startTime = datetime.datetime(now.year, now.month , now.day , hour__ , minute__ , second__)
         difference = abs(currentTime - startTime)
         return int(difference.total_seconds() )
-        # return the duration that the application must wait (from 23:55 to 06:59:50)
+        # return the duration that the application must wait (from 23:55 to 06:59:30)
         # 07:00 is the time that the app starts and 23:55 ends and so on
 
 
@@ -371,10 +371,10 @@ class internet:
             fileInternetError.flush()
             fileInternetError.close()
 
+            email_instance = _email_()
             while( not internet_instance.check_internet_connection() ):
                 time.sleep(1)
                 if( internet_instance.check_internet_connection() ):
-                    email_instance = _email_()
                     print("Connection restored.")
                     fileSettings_instance.write_delay("delay.txt" , timer_.computeDelay(23 , 55 , 0) )
                     timer_.time_correction()
@@ -387,6 +387,18 @@ class internet:
                     print("Sent email due to network disconnection... > " + timer_.hour__ + ":" + timer_.min__ + ":" + timer_.sec__)
                     open("internet_error_DATE.txt").close()
                     break
+            else:
+                print("Connection restored.")
+                fileSettings_instance.write_delay("delay.txt" , timer_.computeDelay(23 , 55 , 0) )
+                timer_.time_correction()
+                email_instance.send_email("📶🛜 Unstabled connection" , timer_.dateAndtime() + "A network connection problem<br>occured at " + \
+                str( open("internet_error_DATE.txt" , 'r').read() ) + "<br><br>Possible problems:<br>● Ethernet cable disconnection<br>● Bad Wi-Fi connection" + \
+                "<br>Connection restored.<br><br>" + "Made in Python" , ToMe)
+                email_instance.send_email("📶🛜 Unstabled connection" , timer_.dateAndtime() + "A network connection problem<br>occured at " +\
+                str( open("internet_error_DATE.txt" , 'r').read() ) + "<br><br>Possible problems:<br>● Ethernet cable disconnection<br>● Bad Wi-Fi connection" +\
+                "<br>Connection restored.<br><br>" + "Made in Python" , ToOther)
+                print("Sent email due to network disconnection... > " + timer_.hour__ + ":" + timer_.min__ + ":" + timer_.sec__)
+                open("internet_error_DATE.txt").close()
         # sleep till wifi is set on
 
 
@@ -1167,7 +1179,7 @@ class launch:
                         time.sleep(10*60)
                         timer_instance = timer()
                         timer_instance.time_correction()
-                        time.sleep( timer_instance.computeTimeSleep(6 , 59 , 50) )  # sleep till tomorrow morning at 7pm                
+                        time.sleep( timer_instance.computeTimeSleep(6 , 59 , 30) )  # sleep till tomorrow morning at 7pm                
                         
                         driver_instance.quit()   # quit firefox
                         os.execv(sys.executable, ["python3"] + sys.argv)    # run again from the top
