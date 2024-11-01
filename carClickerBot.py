@@ -1206,7 +1206,7 @@ class launch:
 
 
         except:
-            print("====================================================\\nAn error occured. Trying again...\n====================================================\\n")
+            print("====================================================\nAn error occured. Trying again...\n====================================================\n")
             initialize_instance = initialize(fileSettings_instance)
             timer_instance = timer()
             email_instance = _email_()
