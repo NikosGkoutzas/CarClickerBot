@@ -1,7 +1,7 @@
 ######################################################################
 ##   Developer/Programmer      Nikos Gkoutzas                       ##
 ##   Start Date                Feb 2022                             ##
-##   Last upgrade              Oct 2024                             ##
+##   Last upgrade              Nov 2024                             ##
 ##   Email                     nickgkoutzasgmail.com                ##
 ##   GitHub                    https://github.com/NikosGkoutzas/    ##
 ##   Linkedin                  Nikos Gkoutzas                       ##
@@ -23,25 +23,30 @@ from email.header import decode_header
 
 
 lines = tuple(open("passwords.txt" , 'r'))
-FROM_EMAIL = lines[0].strip() 
-FROM_PWD = lines[1].strip()  
-ToMe = lines[2].strip()
-ToOther = lines[3].strip()
-site_username = lines[4].strip()
-site_password = lines[5].strip()
-app_version = lines[6].strip()
-PATH_NAME = os.getcwd() + '/'
+                                          # WRITE DOWN ALL THE REQUIREMENTS
+FROM_EMAIL = lines[0].strip()             # email sender
+FROM_PWD = lines[1].strip()               # email sender passcode 
+ToMe = lines[2].strip()                   # 1st email receiver
+ToOther = lines[3].strip()                # 2nd email receiver
+site_username = lines[4].strip()          # username of site
+site_password = lines[5].strip()          # passcode of site
+app_version = lines[6].strip()            # app version
+firefox_dev_path = lines[7].strip()       # firefox-dev's path
+geckodriver_path = lines[8].strip()       # geckodriver web browser engine's path
+PATH_NAME = os.getcwd() + '/'             # current path of the app
 dailyTotalUpdates = 200
 
 
 
 class driver:
     def __init__(self):
-        global driver_instance
+        global driver_instance , firefox_dev_path , geckodriver_path
+
         options = Options()
-        options.binary_location = '/usr/local/bin/firefox-dev'
-        service = Service(executable_path='/usr/local/bin/geckodriver')
-        #options.add_argument('--headless') # hide firefox window
+        options.binary_location = firefox_dev_path
+        options.add_argument('--headless') # hide firefox window
+        service = Service(executable_path=geckodriver_path)
+
         try:
             self.driver = webdriver.Firefox(service=service , options=options) # call Firefox
         except:
@@ -60,41 +65,19 @@ class driver:
 
     def openUrl(self , url):
         try:
-                self.driver.get(url)
+            self.driver.get(url)
         except Exception as e:
-                print(f"Error opening URL: {e}")
+            print(f"Error opening URL: {e}")
         # open URL
 
     def quit(self):
         self.driver.quit()
         # quit from firefox
 
-    def findElement(self , button_string , case , timeout=10):
-        try:
+    def findElement(self , button_string , timeout=10):
             # Wait for the element to become visible
-            element =  WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located((By.CSS_SELECTOR, button_string)))
-            return element
-        except:
-            email_instance = _email_()
-            timer_instance = timer()
-            if(case == 'accept'):
-                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't accept cookies due to button code search failure." , ToMe)
-                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't accept cookies due to button code search failure." , ToOther)
-                print('CarClickerBot can\'t accept cookies due to\nbutton code search failure.')
-            elif(case == 'username'):
-                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't place username due to field code search failure." , ToMe)
-                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't place username due to field code search failure." , ToOther)
-                print('CarClickerBot can\'t place username due to\nfield code search failure.')
-            if(case == 'password'):
-                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't place password due to field code search failure." , ToMe)
-                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't place password due to field code search failure." , ToOther)
-                print('CarClickerBot can\'t place password due to\nfield code search failure.')
-            elif(case == 'login'):
-                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure." , ToMe)
-                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure." , ToOther)
-                print('CarClickerBot can\'t login due to\nbutton code search failure.')
-            sys.exit(0)
-        # driver return the button using the css selector
+            return  WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located((By.CSS_SELECTOR, button_string)))
+            # driver return the button using the css selector
 
 
 
@@ -909,6 +892,7 @@ class launch:
     @staticmethod
     def launch_program():
         global initialize_instance , app_version
+        issue_case = None
         try:
             fileSettings_instance = fileSettings()
             reset_instance = reset()
@@ -927,9 +911,10 @@ class launch:
             cookies = None
 
             try:
-                cookies = driver_instance.findElement(".css-ofc9r3" , '') 
+                cookies = driver_instance.findElement(".css-ofc9r3") 
             except:
-                cookies = driver_instance.findElement(".css-ofc9r3 > span:nth-child(1)" , 'accept')      # accept cookies
+                issue_case = 'accept'
+                cookies = driver_instance.findElement(".css-ofc9r3 > span:nth-child(1)")      # accept cookies
 
             cookies.click()
             print("Step 3: Accept cookies")
@@ -942,28 +927,31 @@ class launch:
             password_input = None
             log_in_button = None
             try:
-                username_input = driver_instance.findElement("#ui-id-2 > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)" , '')     # give username
+                username_input = driver_instance.findElement("#ui-id-2 > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)")     # give username
                 username_input.send_keys(site_username)
             except:
-                username_input = driver_instance.findElement("#input-username" , 'username')     # give username
+                issue_case = 'username'
+                username_input = driver_instance.findElement("#input-username")     # give username
                 username_input.send_keys(site_username)
                 
             print("Step 5: Enter username")
             internet_instance.error_and_back_to_internet()
             try:
-                password_input = driver_instance.findElement("#ui-id-2 > div:2nth-child(3) > div:nth-child(2) > input:nth-child(1)" , '')     # give password
+                password_input = driver_instance.findElement("#ui-id-2 > div:2nth-child(3) > div:nth-child(2) > input:nth-child(1)")     # give password
                 password_input.send_keys(site_password)
             except:
-                password_input = driver_instance.findElement("#current-password" , 'password')     # give password
+                issue_case = 'password'
+                password_input = driver_instance.findElement("#current-password")     # give password
                 password_input.send_keys(site_password)
 
             print("Step 6: Enter password")
             time.sleep(1)
             internet_instance.error_and_back_to_internet()
             try:
-                log_in_button = driver_instance.findElement(".submit-btn > span:nth-child(1)" , '')   # press login button
+                log_in_button = driver_instance.findElement(".submit-btn > span:nth-child(1)")   # press login button
             except:
-                log_in_button = driver_instance.findElement(".submit-btn" , 'login')   # press login button
+                issue_case = 'login'
+                log_in_button = driver_instance.findElement(".submit-btn")   # press login button
             internet_instance.error_and_back_to_internet()
             
             log_in_button.click()
@@ -1009,12 +997,12 @@ class launch:
                         
                         for loops in range(5):
                             try:
-                                updateMachine = driver_instance.findElement("div.c-list-group-item:nth-child(1) > div:nth-child(1)" , '')     # find the update button
+                                updateMachine = driver_instance.findElement("div.c-list-group-item:nth-child(1) > div:nth-child(1)")     # find the update button
                                 updateMachine.click()       # press the "update" button
                                 break
                             except:
                                 try:
-                                    updateMachine = driver_instance.findElement("div.list-group-item:nth-child(1)" , '')     # find the update button
+                                    updateMachine = driver_instance.findElement("div.list-group-item:nth-child(1)")     # find the update button
                                     updateMachine.click()       # press the "update" button
                                     break
                                 except:
@@ -1206,12 +1194,30 @@ class launch:
 
 
         except:
-            print("====================================================\nAn error occured. Trying again...\n====================================================\n")
             initialize_instance = initialize(fileSettings_instance)
             timer_instance = timer()
             email_instance = _email_()
-            email_instance.send_email("🚨 Unknown error" , timer_instance.dateAndtime() + "App stopped running due to an unknown exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
-            email_instance.send_email("🚨 Unknown error" , timer_instance.dateAndtime() + "App stopped running due to an unknown exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
+            if(issue_case == 'accept'):
+                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't accept cookies due to button code search failure.<br>CarClickerBot restarts soon." , ToMe)
+                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't accept cookies due to button code search failure.<br>CarClickerBot restarts soon." , ToOther)
+                print('CarClickerBot can\'t accept cookies due to\nbutton code search failure.')
+            elif(issue_case == 'username'):
+                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't place username due to field code search failure.<br>CarClickerBot restarts soon." , ToMe)
+                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't place username due to field code search failure.<br>CarClickerBot restarts soon." , ToOther)
+                print('CarClickerBot can\'t place username due to\nfield code search failure.')
+            if(issue_case == 'password'):
+                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't place password due to field code search failure.<br>CarClickerBot restarts soon." , ToMe)
+                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't place password due to field code search failure.<br>CarClickerBot restarts soon." , ToOther)
+                print('CarClickerBot can\'t place password due to\nfield code search failure.')
+            elif(issue_case == 'login'):
+                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure.<br>CarClickerBot restarts soon." , ToMe)
+                email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure.<br>CarClickerBot restarts soon." , ToOther)
+                print('CarClickerBot can\'t login due to\nbutton code search failure.')
+            elif(issue_case == None):
+                print("====================================================\nAn unknown error occured. Trying again...\n====================================================\n")
+                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
+                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
+            issue_case = None
             current_time = datetime.datetime.now().time()   # get current time
             if(not current_time < initialize_instance.on_time and not current_time >= initialize_instance.off_time):
                 email_instance.read_email()
@@ -1238,6 +1244,10 @@ class launch:
             driver_instance.quit()   # quit firefox
             os.execv(sys.executable, ["python3"] + sys.argv)    # run again from the top
         
+
+
+
+
 
 
 
