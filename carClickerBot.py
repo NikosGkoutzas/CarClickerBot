@@ -994,20 +994,23 @@ class launch:
 
                         internet_instance.error_and_back_to_internet()
                         updateMachine = None
-                        
+                        updated = False
                         for loops in range(5):
                             try:
                                 updateMachine = driver_instance.findElement("div.c-list-group-item:nth-child(1) > div:nth-child(1)")     # find the update button
                                 updateMachine.click()       # press the "update" button
+                                updated = True
                                 break
                             except:
                                 try:
                                     updateMachine = driver_instance.findElement("div.list-group-item:nth-child(1)")     # find the update button
                                     updateMachine.click()       # press the "update" button
+                                    updated = True
                                     break
                                 except:
                                     time.sleep(3)
                                     if(loops == 4): # go to the next machine
+                                        updated = False
                                         loops = 0   # and go at the beginning
                                         if(currentPosUpdate == fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")):  # if update of all machines finished
                                             currentPosUpdate = 0                    # start again
@@ -1028,18 +1031,18 @@ class launch:
                         internet_instance.error_and_back_to_internet()
                         
                         
-                        
-                        initialize_instance.machinesEachUpdate[currentPosUpdate] += 1
-                        with open("updateNumber.txt" , 'r') as file:
-                            fileSettings_instance.replace_line("MachinesEachUpdate.txt" , int( file.read() ) , initialize_instance.machinesEachUpdate)
-                        open("updateNumber.txt").close()
-                        
-                        totalUpdates += 1
-                        with open("totalUpdates.txt" , 'w') as fileTotal:
-                            fileTotal.write(str(totalUpdates))   # write the number in the file
-                            fileTotal.flush() 
-                            fileTotal.close()
-                        
+                        if(updated):
+                            initialize_instance.machinesEachUpdate[currentPosUpdate] += 1
+                            with open("updateNumber.txt" , 'r') as file:
+                                fileSettings_instance.replace_line("MachinesEachUpdate.txt" , int( file.read() ) , initialize_instance.machinesEachUpdate)
+                            open("updateNumber.txt").close()
+                            
+                            totalUpdates += 1
+                            with open("totalUpdates.txt" , 'w') as fileTotal:
+                                fileTotal.write(str(totalUpdates))   # write the number in the file
+                                fileTotal.flush() 
+                                fileTotal.close()
+                            
                         with open("totalUpdates.txt" , 'r') as fileTotal_R:
                             timer_instance = timer()
                             timer_instance.time_correction()
