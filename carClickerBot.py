@@ -710,7 +710,8 @@ class _email_:
 
                                 driver_instance.quit()   # quit firefox
                                 os.execv(sys.executable, ["python3"] + sys.argv)    # run again from the top
-
+                                launcher = launch()
+                                launcher.launch_program()
 
                     if(email_subject == 'username' or email_subject == 'Username' or email_subject == 'password' or email_subject == 'Password'):
                         listOfMonths = ["Jan" , "Feb" , "Mar" , "Apr" , "May" , "Jun" , "Jul" , "Aug" , "Sep" , "Oct" , "Nov" , "Dec"]
