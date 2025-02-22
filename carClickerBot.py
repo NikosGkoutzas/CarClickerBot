@@ -58,8 +58,8 @@ class driver:
             email_instance = _email_()
             timer_instance = timer()
             fileSettings_instance.write_total_errors("totalErrors.txt")
-            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
-            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
+            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue.<br>Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
+            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue.<br>Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
             os.execv(sys.executable, ["python3"] + sys.argv) 
 
 
@@ -1049,7 +1049,7 @@ class launch:
                             timer_instance.time_correction()
                             if( int(fileTotal_R.read()) == 1):
                                 actions = 'Insert a new machine or delete an existing<br>one, update to the latest version of app,<br>receive a feedback, reset the app, change<br>the username/password or set a new<br>geckodriver web browser engine.<br>Do all these stuff by sending an email.<br><br>'
-                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
+                                email_instance.send_email("✅ App launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
                                                     str(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) + \
                                                     "<br><br><b>Actions</b>:<br>" + actions + "● &nbsp;Send an email to " + str(FROM_EMAIL) + "<br>" + "&nbsp;" * 4 + "     with subject: 'Insert'" + "<br>" + "&nbsp;" * 4 + \
                                                     "     and message: The link-machine" + "<br>" + "&nbsp;" * 4 + " you want to add.<br><br> \
@@ -1069,7 +1069,7 @@ class launch:
                                                     "     and message: Import the file.<br><br>" \
                                                 "A notification will be sent.<br><br>" + "Made in Python" , ToMe)
                                 
-                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
+                                email_instance.send_email("✅ App launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
                                                     str(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) + \
                                                     "<br><br><b>Actions</b>:<br>" + actions + "● &nbsp;Send an email to " + str(FROM_EMAIL) + "<br>" + "&nbsp;" * 4 + "     with subject: 'Insert'" + "<br>" + "&nbsp;" * 4 + \
                                                     "     and message: The link-machine" + "<br>" + "&nbsp;" * 4 + " you want to add.<br><br> \
@@ -1219,8 +1219,8 @@ class launch:
                 print('CarClickerBot can\'t login due to\nbutton code search failure.')
             elif(issue_case == None):
                 print("====================================================\nAn unknown error occured. Trying again...\n====================================================\n")
-                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
-                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
+                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception.<br>Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
+                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception.<br>Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
             issue_case = None
             current_time = datetime.datetime.now().time()   # get current time
             if(not current_time < initialize_instance.on_time and not current_time >= initialize_instance.off_time):
