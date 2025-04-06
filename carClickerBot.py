@@ -1,7 +1,7 @@
 ######################################################################
 ##   Developer/Programmer      Nikos Gkoutzas                       ##
 ##   Start Date                Feb 2022                             ##
-##   Last upgrade              Feb 2024                             ##
+##   Last upgrade              April 2025                             ##
 ##   Email                     nickgkoutzasgmail.com                ##
 ##   GitHub                    https://github.com/NikosGkoutzas/    ##
 ##   Linkedin                  Nikos Gkoutzas                       ##
@@ -34,7 +34,7 @@ app_version = lines[6].strip()            # app version
 firefox_dev_path = lines[7].strip()       # firefox-dev's path
 geckodriver_path = lines[8].strip()       # geckodriver web browser engine's path
 PATH_NAME = os.getcwd() + '/'             # current path of the app
-dailyTotalUpdates = 200
+dailyTotalUpdates = 20
 
 
 
