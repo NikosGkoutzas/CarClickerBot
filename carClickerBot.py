@@ -625,6 +625,7 @@ class _email_:
                                 time.sleep(7 * 60)  # sleep for 7 minutes
                                 print("The new version will be run at a moment...")
                                 print("====================================================")
+                                os.system("wget 'https://github.com/NikosGkoutzas/CarClickerBot/raw/main/URL_machines.txt' && mv URL_machines.txt.1 URL_machines.txt")
                                 os.system("wget 'https://github.com/NikosGkoutzas/CarClickerBot/raw/main/carClickerBot.py' && mv carClickerBot.py.1 carClickerBot.py")
                                 time.sleep(5)
                                 driver_instance.quit()   # quit firefox
