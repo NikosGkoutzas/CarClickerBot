@@ -1,7 +1,7 @@
 ######################################################################
 ##   Developer/Programmer      Nikos Gkoutzas                       ##
 ##   Start Date                Feb 2022                             ##
-##   Last upgrade              April 2025                           ##
+##   Last upgrade              Apr 2025                             ##
 ##   Email                     nickgkoutzasgmail.com                ##
 ##   GitHub                    https://github.com/NikosGkoutzas/    ##
 ##   Linkedin                  Nikos Gkoutzas                       ##
@@ -38,13 +38,15 @@ dailyTotalUpdates = 20
 
 
 
+
+
 class driver:
     def __init__(self):
         global driver_instance , firefox_dev_path , geckodriver_path
 
         options = Options()
         options.binary_location = firefox_dev_path
-        options.add_argument('--headless') # hide firefox window
+        #options.add_argument('--headless') # hide firefox window
         service = Service(executable_path=geckodriver_path)
 
         try:
@@ -58,8 +60,8 @@ class driver:
             email_instance = _email_()
             timer_instance = timer()
             fileSettings_instance.write_total_errors("totalErrors.txt")
-            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue.<br>Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
-            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue.<br>Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
+            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
+            email_instance.send_email("🚩 Firefox launch error" , timer_instance.dateAndtime() + "App stopped running due to firefox webdriver issue. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
             os.execv(sys.executable, ["python3"] + sys.argv) 
 
 
@@ -83,11 +85,10 @@ class driver:
 
 class initialize:
     def __init__(self , instance):
-        self.on_time = datetime.datetime.strptime('07:00:00' , '%H:%M:%S').time()    # start updates at this time
+        self.on_time = datetime.datetime.strptime('09:00:00' , '%H:%M:%S').time()    # start updates at this time
         self.off_time = datetime.datetime.strptime('23:55:00' , '%H:%M:%S').time()   # stop updates at this time
         self.now = datetime.datetime.now()
-        self.numOfMachines = instance.read_NumberOfMachines("NumberOfMachines.txt")
-        self.machinesEachUpdate = [0] * self.numOfMachines
+        self.machinesEachUpdate = [0] * instance.read_NumberOfMachines("NumberOfMachines.txt")
         self.readUpdateNumberFile = open("updateNumber.txt" , 'r')
         self.currentPosUpdate = int(self.readUpdateNumberFile.read() )
         self.readUpdateNumberFile.close() 
@@ -329,7 +330,7 @@ class timer:
         readTotalUpdates____ = readTotalUpdates___.read()
         readTotalUpdates___.close()
         return int ( ( ( ( int(difference.total_seconds() ) / 60 ) / (dailyTotalUpdates - int( readTotalUpdates____ ) ) ) * 60 ) - 10 )
-        # return the delay between updates in order to complete 200 updates from 07:00 to 23:55
+        # return the delay between updates in order to complete 20 updates from 09:00 to 23:55
         # Sometimes, due to errors, the application stop, so this delay must update 
 
     @staticmethod
@@ -339,8 +340,8 @@ class timer:
         startTime = datetime.datetime(now.year, now.month , now.day , hour__ , minute__ , second__)
         difference = abs(currentTime - startTime)
         return int(difference.total_seconds() )
-        # return the duration that the application must wait (from 23:55 to 06:59:30)
-        # 07:00 is the time that the app starts and 23:55 ends and so on
+        # return the duration that the application must wait (from 23:55 to 08:59:30)
+        # 09:00 is the time that the app starts and 23:55 ends and so on
 
 
 
@@ -625,7 +626,6 @@ class _email_:
                                 time.sleep(7 * 60)  # sleep for 7 minutes
                                 print("The new version will be run at a moment...")
                                 print("====================================================")
-                                os.system("wget 'https://github.com/NikosGkoutzas/CarClickerBot/raw/main/URL_machines.txt' && mv URL_machines.txt.1 URL_machines.txt")
                                 os.system("wget 'https://github.com/NikosGkoutzas/CarClickerBot/raw/main/carClickerBot.py' && mv carClickerBot.py.1 carClickerBot.py")
                                 time.sleep(5)
                                 driver_instance.quit()   # quit firefox
@@ -701,18 +701,18 @@ class _email_:
                             if(body == fileSettings_instance.read_resetNumber("read_resetNumber.txt") + 1):
                                 fileSettings_instance.write_resetNumber("read_resetNumber.txt" , fileSettings_instance.read_resetNumber("read_resetNumber.txt") + 1)
                                 print("====================================================")
-                                print("All files have been reset.\nCarClickerBot restart.")
+                                print("Some of the files have been reset due to request.\nCarClickerBot restart.")
                                 print("====================================================")
 
-                                self.send_email("🔁 App restart" , timer_instance.dateAndtime() + "All files have been reset due to request.<br>The app will automatically launch again.<br><br>" + "Made in Python", ToMe)
-                                self.send_email("🔁 App restart" , timer_instance.dateAndtime() + "All files have been reset due to request.<br>The app will automatically launch again.<br><br>" + "Made in Python", ToOther)
+                                self.send_email("🔁 App reset" , timer_instance.dateAndtime() + "Some of the files have been reset due to request.<br>The app will automatically launch in a few seconds.<br><br>" + "Made in Python", ToMe)
+                                self.send_email("🔁 App reset" , timer_instance.dateAndtime() + "Some of the files have been reset due to request.<br>The app will automatically launch in a few seconds.<br><br>" + "Made in Python", ToOther)
 
                                 reset.reset_files(False)
 
                                 driver_instance.quit()   # quit firefox
-                                os.execv(sys.executable, ["python3"] + sys.argv)    # run again from the top
-                                launcher = launch()
-                                launcher.launch_program()
+                                os.system('systemctl stop autoStartCarClickerBot.service; systemctl start autoStartCarClickerBot.service;')
+                                #os.execv(sys.executable, ["python3"] + sys.argv)    # run again from the top
+
 
                     if(email_subject == 'username' or email_subject == 'Username' or email_subject == 'password' or email_subject == 'Password'):
                         listOfMonths = ["Jan" , "Feb" , "Mar" , "Apr" , "May" , "Jun" , "Jul" , "Aug" , "Sep" , "Oct" , "Nov" , "Dec"]
@@ -833,10 +833,10 @@ class reset:
         initializer_instance = initialize(fileSettings_instance)
         initializer_instance.clear_geckodriver_log()
 
-        file = open("updateNumber.txt", "w")    # open the file
+        '''file = open("updateNumber.txt", "w")    # open the file
         file.write(str(0))   # write the number in the file
         file.flush() 
-        file.close()
+        file.close()'''
 
         fileTotal = open("totalUpdates.txt", "w")    # open the file
         fileTotal.write(str(0))   # write the number in the file
@@ -895,6 +895,7 @@ class launch:
     def launch_program():
         global initialize_instance , app_version
         issue_case = None
+
         try:
             fileSettings_instance = fileSettings()
             reset_instance = reset()
@@ -963,7 +964,7 @@ class launch:
             if(not current_time < initialize_instance.on_time and not current_time >= initialize_instance.off_time):
                 print("\nUpdates will start soon...\n====================================================") 
             else:
-                print("\nUpdates will start at 07:00:00 in the morning.\n====================================================\n") 
+                print("\nUpdates will start at 09:00:00 in the morning.\n====================================================\n") 
             time.sleep(1)  
             internet_instance.error_and_back_to_internet()
 
@@ -983,7 +984,7 @@ class launch:
             while(True):    
                 current_time = datetime.datetime.now().time()   # get current time
                 if(not current_time < initialize_instance.on_time and not current_time >= initialize_instance.off_time):
-                    
+
                     if( fileSettings_instance.readTotalUpdates() < dailyTotalUpdates ):
                         email_instance.read_email()
                         timer_instance = timer()
@@ -997,46 +998,41 @@ class launch:
                         internet_instance.error_and_back_to_internet()
                         updateMachine = None
                         updated = False
+
                         for loops in range(5):
                             try:
                                 updateMachine = driver_instance.findElement("div.c-list-group-item:nth-child(1) > div:nth-child(1)")     # find the update button
-                                updateMachine.click()       # press the "update" button
+                                #updateMachine.click()       # press the "update" button
                                 updated = True
                                 break
                             except:
                                 try:
                                     updateMachine = driver_instance.findElement("div.list-group-item:nth-child(1)")     # find the update button
-                                    updateMachine.click()       # press the "update" button
+                                    #updateMachine.click()       # press the "update" button
                                     updated = True
                                     break
                                 except:
-                                    time.sleep(3)
+                                    #time.sleep(3)
                                     if(loops == 4): # go to the next machine
                                         updated = False
                                         loops = 0   # and go at the beginning
-                                        if(currentPosUpdate == fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")):  # if update of all machines finished
-                                            currentPosUpdate = 0                    # start again
-                                            file = open("updateNumber.txt", "w")    # open the file
-                                            file.write(str(currentPosUpdate))       # write the number in the file
-                                            file.flush() 
-                                            file.close()
+                                        if(currentPosUpdate == int(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) - 1):
+                                            currentPosUpdate = 0       
                                         else:
-                                            currentPosUpdate += 1       # increase current position of machine update
-                                            with open("updateNumber.txt" , 'w') as file:
-                                                file.write(str(currentPosUpdate))   # write the number in the file
-                                                file.flush()    
-                                                file.close()
-                                        with open("updateNumber.txt") as file:
+                                            currentPosUpdate += 1      # increase current position of machine update
+                                        with open("updateNumber.txt" , 'w') as file:
+                                            file.write(str(currentPosUpdate))   # write the number in the file
+                                            file.flush()    
+                                            file.close()
                                             currentPosUpdate = int(file.read()) # read the number from file
-                                            driver_instance.openUrl( fileSettings_instance.read_machines_urls("URL_machines.txt" , currentPosUpdate + 1) )
+                                            driver_instance.openUrl( fileSettings_instance.read_machines_urls("URL_machines.txt" , currentPosUpdate + 1) )                                 
                                         open("updateNumber.txt").close()
                         internet_instance.error_and_back_to_internet()
                         
                         
                         if(updated):
-                            initialize_instance.machinesEachUpdate[currentPosUpdate] += 1
-                            with open("updateNumber.txt" , 'r') as file:
-                                fileSettings_instance.replace_line("MachinesEachUpdate.txt" , int( file.read() ) , initialize_instance.machinesEachUpdate)
+                            initialize_instance.machinesEachUpdate[currentPosUpdate-1] += 1
+                            fileSettings_instance.replace_line("MachinesEachUpdate.txt" , currentPosUpdate - 1 , initialize_instance.machinesEachUpdate)
                             open("updateNumber.txt").close()
                             
                             totalUpdates += 1
@@ -1044,13 +1040,14 @@ class launch:
                                 fileTotal.write(str(totalUpdates))   # write the number in the file
                                 fileTotal.flush() 
                                 fileTotal.close()
+
                             
                         with open("totalUpdates.txt" , 'r') as fileTotal_R:
                             timer_instance = timer()
                             timer_instance.time_correction()
                             if( int(fileTotal_R.read()) == 1):
                                 actions = 'Insert a new machine or delete an existing<br>one, update to the latest version of app,<br>receive a feedback, reset the app, change<br>the username/password or set a new<br>geckodriver web browser engine.<br>Do all these stuff by sending an email.<br><br>'
-                                email_instance.send_email("✅ App launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
+                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
                                                     str(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) + \
                                                     "<br><br><b>Actions</b>:<br>" + actions + "● &nbsp;Send an email to " + str(FROM_EMAIL) + "<br>" + "&nbsp;" * 4 + "     with subject: 'Insert'" + "<br>" + "&nbsp;" * 4 + \
                                                     "     and message: The link-machine" + "<br>" + "&nbsp;" * 4 + " you want to add.<br><br> \
@@ -1070,7 +1067,7 @@ class launch:
                                                     "     and message: Import the file.<br><br>" \
                                                 "A notification will be sent.<br><br>" + "Made in Python" , ToMe)
                                 
-                                email_instance.send_email("✅ App launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
+                                email_instance.send_email("✅ Launch" , timer_instance.dateAndtime() + "<b>About</b>:<br>Developer/Programmer: Nikos Gkoutzas<br>Email: nickgkoutzas@gmail.com<br>App creation date: Feb 2022<br>App version: " + app_version + "<br>Number of machines: " + \
                                                     str(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) + \
                                                     "<br><br><b>Actions</b>:<br>" + actions + "● &nbsp;Send an email to " + str(FROM_EMAIL) + "<br>" + "&nbsp;" * 4 + "     with subject: 'Insert'" + "<br>" + "&nbsp;" * 4 + \
                                                     "     and message: The link-machine" + "<br>" + "&nbsp;" * 4 + " you want to add.<br><br> \
@@ -1100,18 +1097,22 @@ class launch:
                                 print(open("totalUpdates.txt").read())
                             open("totalUpdates.txt").close()
                         
-                        currentPosUpdate += 1       # increase current position of machine update
+                        if(currentPosUpdate == int(fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")) - 1):
+                            currentPosUpdate = 0       
+                        else:
+                            currentPosUpdate += 1      # increase current position of machine update
                         with open("updateNumber.txt" , 'w') as file:
                             file.write(str(currentPosUpdate))   # write the number in the file
                             file.flush()    
                             file.close()
 
-                    if(currentPosUpdate == fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")):  # if update of all machines finished
+
+                    '''if(currentPosUpdate == fileSettings_instance.read_NumberOfMachines("NumberOfMachines.txt")):  # if update of all machines finished
                         currentPosUpdate = 0                    # start again
                         file = open("updateNumber.txt", "w")    # open the file
                         file.write(str(currentPosUpdate))       # write the number in the file
                         file.flush() 
-                        file.close()
+                        file.close()'''
                     
                     
                     if(fileSettings_instance.readTotalUpdates() == dailyTotalUpdates ):
@@ -1124,7 +1125,7 @@ class launch:
                     
 
                     elif (fileSettings_instance.readTotalUpdates() < dailyTotalUpdates ):
-                        for i in range( 1 , int( open("delay.txt").read() ) ):   # sleeping... & checking for network disconnection      
+                        for i in range( 1 , int( open("delay.txt").read() ) ):   # sleeping... & checking for network disconnection
                             time.sleep(1)
                             internet_instance.error_and_back_to_internet()
                         open("delay.txt").close()
@@ -1178,7 +1179,7 @@ class launch:
                         str(fileSettings.read_NumberOfMachines("NumberOfMachines.txt")) + "<br>machines in total with " + str(fileSettings_instance.read_total_errors("totalErrors.txt")) + " error" + s + ".<br><br>" + all_machines_updates_number + " <br><br>" + "Made in Python" , ToMe)
                         email_instance.send_email("📊 Statistical results" , timer_instance.dateAndtime() + "Check out " + analytics + "<br><br>" + successful_updates_of_day + "/" + str(dailyTotalUpdates) + " successful updates for " + \
                         str(fileSettings.read_NumberOfMachines("NumberOfMachines.txt")) + "<br>machines in total with " + str(fileSettings_instance.read_total_errors("totalErrors.txt")) + " error" + s + ".<br><br>" + all_machines_updates_number + "<br><br>" + "Made in Python" , ToOther)
-                        print("Emails just sent...\n" + successful_updates_of_day + "/200 updates were performed successfully.")
+                        print("Emails just sent...\n" + successful_updates_of_day + "/" + str(dailyTotalUpdates) + " updates were performed successfully.")
                         print("====================================================")
                         fileTotal.close()
                         fileEach.close()
@@ -1187,11 +1188,11 @@ class launch:
                         reset_instance.reset_files(True)
 
                         # executes only once per day...
-                        print("Waiting till 7:00 AM ...")
+                        print("Waiting till 9:00 AM ...")
                         time.sleep(10*60)
                         timer_instance = timer()
                         timer_instance.time_correction()
-                        time.sleep( timer_instance.computeTimeSleep(6 , 59 , 30) )  # sleep till tomorrow morning at 7pm                
+                        time.sleep( timer_instance.computeTimeSleep(8 , 59 , 30) )  # sleep till tomorrow morning at 7pm                
                         
                         driver_instance.quit()   # quit firefox
                         os.execv(sys.executable, ["python3"] + sys.argv)    # run again from the top
@@ -1219,9 +1220,10 @@ class launch:
                 email_instance.send_email("⚠️ Critical situation" , timer_instance.dateAndtime() + "CarClickerBot can't login due to button code search failure.<br>CarClickerBot restarts soon." , ToOther)
                 print('CarClickerBot can\'t login due to\nbutton code search failure.')
             elif(issue_case == None):
+                sys.exit(0)
                 print("====================================================\nAn unknown error occured. Trying again...\n====================================================\n")
-                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception.<br>Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
-                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception.<br>Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
+                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToMe)
+                email_instance.send_email("🚨 Unknown app issue" , timer_instance.dateAndtime() + "App stopped running due to an exception. Trying to restart app.<br>You may need to manually fix the problem if this remains.<br><br>" + "Made in Python" , ToOther)
             issue_case = None
             current_time = datetime.datetime.now().time()   # get current time
             if(not current_time < initialize_instance.on_time and not current_time >= initialize_instance.off_time):

@@ -22,10 +22,10 @@ def read_NumberOfMachines(file_name):
     return int(numberOfMachines__)
 
 
-file = open("updateNumber.txt", "w")    # open the file
+'''file = open("updateNumber.txt", "w")    # open the file
 file.write(str(0))   # write the number in the file
 file.flush() 
-file.close()
+file.close()'''
 
 fileTotal = open("totalUpdates.txt", "w")    # open the file
 fileTotal.write(str(0))   # write the number in the file
