@@ -1,6 +1,6 @@
 <h1><b>Application Description for Automated Ad<br>Management on www.car.gr</b></h1>
 
-This application, written in Python, automates the management of ads on www.car.gr, ensuring that ads are regularly refreshed to appear higher in user searches. The application runs daily from 7:00 AM to 11:55 PM, performing a total of 200 refreshes at regular intervals.
+This application, written in Python, automates the management of ads on www.car.gr, ensuring that ads are regularly refreshed to appear higher in user searches. The application runs daily from 9:00 AM to 11:55 PM, performing a total of 20 refreshes at regular intervals.
 
 Application Features:
 
@@ -23,7 +23,7 @@ Application Features:
 
 4.	Email notifications and statistics:
 	    
-      •	Every morning at 7:00 AM, you receive an email notification confirming the application’s startup, ensuring that the process began smoothly.
+      •	Every morning at 9:00 AM, you receive an email notification confirming the application’s startup, ensuring that the process began smoothly.
 	
       •	After the application finishes at 11:55 PM, you receive an email with statistics about the ad refreshes.
 	
