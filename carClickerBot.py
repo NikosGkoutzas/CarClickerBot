@@ -46,7 +46,7 @@ class driver:
 
         options = Options()
         options.binary_location = firefox_dev_path
-        #options.add_argument('--headless') # hide firefox window
+        options.add_argument('--headless') # hide firefox window
         service = Service(executable_path=geckodriver_path)
 
         try:
