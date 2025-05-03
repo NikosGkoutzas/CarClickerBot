@@ -1002,13 +1002,13 @@ class launch:
                         for loops in range(5):
                             try:
                                 updateMachine = driver_instance.findElement("div.c-list-group-item:nth-child(1) > div:nth-child(1)")     # find the update button
-                                #updateMachine.click()       # press the "update" button
+                                updateMachine.click()       # press the "update" button
                                 updated = True
                                 break
                             except:
                                 try:
                                     updateMachine = driver_instance.findElement("div.list-group-item:nth-child(1)")     # find the update button
-                                    #updateMachine.click()       # press the "update" button
+                                    updateMachine.click()       # press the "update" button
                                     updated = True
                                     break
                                 except:
