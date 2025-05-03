@@ -34,7 +34,7 @@ app_version = lines[6].strip()            # app version
 firefox_dev_path = lines[7].strip()       # firefox-dev's path
 geckodriver_path = lines[8].strip()       # geckodriver web browser engine's path
 PATH_NAME = os.getcwd() + '/'             # current path of the app
-dailyTotalUpdates = 20
+dailyTotalUpdates = 200
 
 
 
@@ -330,7 +330,7 @@ class timer:
         readTotalUpdates____ = readTotalUpdates___.read()
         readTotalUpdates___.close()
         return int ( ( ( ( int(difference.total_seconds() ) / 60 ) / (dailyTotalUpdates - int( readTotalUpdates____ ) ) ) * 60 ) - 10 )
-        # return the delay between updates in order to complete 20 updates from 09:00 to 23:55
+        # return the delay between updates in order to complete 200 updates from 09:00 to 23:55
         # Sometimes, due to errors, the application stop, so this delay must update 
 
     @staticmethod
