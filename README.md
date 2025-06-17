@@ -36,7 +36,7 @@ Application Features:
 5.	Data security and recovery in case of power failure:
    All application data is logged and stored in files, so in case of a power outage on the server, no information is lost. Once the system is restored, the application can resume from where it left off.
 6.	Automatic restart:
-   After the daily process ends at 11:55 PM, the application enters a standby mode until 7:00 AM the following day, when it restarts and continues refreshing the ads.
+   After the daily process ends at 11:55 PM, the application enters a standby mode until 9:00 AM the following day, when it restarts and continues refreshing the ads.
 
 Requirements and Key Technologies:
  
